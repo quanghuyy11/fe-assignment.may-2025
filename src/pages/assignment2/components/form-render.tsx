@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { resetForm, selectAddress } from "@/store/address/address-slice";
 import { AddressInput } from "./address-input";
-import { LOCAL_STORAGE_KEY } from "@/utils/localstorage";
 
 export const FormRender = () => {
   const dispatch = useDispatch();
@@ -18,7 +17,6 @@ export const FormRender = () => {
   const handleResetForm = (): void => {
     setShowAddress(false);
     dispatch(resetForm());
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
 
   const handleHideAddress = (): void => {

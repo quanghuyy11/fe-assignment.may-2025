@@ -8,14 +8,9 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { useDispatch, useSelector } from "react-redux";
 import { selectAddress, setAddress } from "@/store/address/address-slice";
-
-const data: Record<string, string[]> = {
-  "Hồ Chí Minh": ["Quận 1", "Quận Bình Thạnh", "Quận Tân Bình"],
-  "Hà Nội": ["Quận Hoàn Kiếm", "Quận Cầu Giấy", "Quận Đống Đa"],
-  "Đà Nẵng": ["Quận Hải Châu", "Quận Thanh Khê", "Quận Sơn Trà"],
-};
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { cityData } from "@/sample/city";
 
 interface AddressInputProps {
   handleHideAddress: () => void;
@@ -24,8 +19,9 @@ interface AddressInputProps {
 export const AddressInput: React.FC<AddressInputProps> = ({
   handleHideAddress,
 }) => {
-  const dispatch = useDispatch();
-  const address = useSelector(selectAddress);
+  const dispatch = useAppDispatch();
+  const address = useAppSelector(selectAddress);
+  const data = cityData;
 
   return (
     <div className="space-y-3">

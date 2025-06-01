@@ -1,13 +1,33 @@
-import { FormRender } from "./form-render";
+import { FormRender } from "./components/form-render";
 import "./assignment2.css";
+import { useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function Assignment2() {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex items-center justify-center animated-gradient">
-      <div className="p-8 w-full max-w-xl bg-white rounded-xl shadow-xl border border-gray-200">
-        <h1 className="text-3xl font-bold mb-6 text-center">Assignment 2</h1>
-        <FormRender />
-      </div>
+      <Card className="w-full max-w-xl shadow-xl border border-gray-200">
+        <CardHeader>
+          <CardTitle className="text-3xl text-center">Assignment 2</CardTitle>
+        </CardHeader>
+
+        <CardContent>
+          <FormRender />
+        </CardContent>
+
+        <CardFooter className="justify-end">
+          <Button onClick={() => navigate("/")}>Go back to menu</Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

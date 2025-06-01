@@ -1,19 +1,43 @@
-import { configureStore } from "@reduxjs/toolkit";
+// store/index.ts
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import addressReducer from "./address/address-slice";
-import { loadFromLocalStorage, saveToLocalStorage } from "@/utils/localstorage";
+import tableReducer from "./table/table-slice";
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage"; // sử dụng localStorage
 
-const preloadedState = loadFromLocalStorage();
+const rootReducer = combineReducers({
+  address: addressReducer,
+  table: tableReducer,
+});
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    address: addressReducer,
-  },
-  preloadedState,
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-store.subscribe(() => {
-  saveToLocalStorage(store.getState());
-});
+export const persistor = persistStore(store);
 
-export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

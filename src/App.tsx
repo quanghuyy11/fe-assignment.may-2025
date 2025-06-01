@@ -19,7 +19,7 @@ function App() {
         <Link to="/assignment2">Assignment 2</Link>
       </Button>
       <Button asChild>
-        <Link to="/image1">Assignment 3</Link>
+        <Link to="/assignment3">Assignment 3</Link>
       </Button>
     </div>
   )
