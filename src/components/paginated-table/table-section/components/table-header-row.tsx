@@ -17,8 +17,12 @@ export function TableHeaderRow<
           key={col.key as string}
           onClick={() => dispatch(setSort({ sortBy: col.key as string }))}
           className="cursor-pointer hover:bg-gray-100 whitespace-nowrap"
+          style={{
+            minWidth: col.width,
+            maxWidth: col.width,
+          }}
         >
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between hover:opacity-50">
             {col.label}
             {sortBy === col.key &&
               (sortOrder === "asc" ? (

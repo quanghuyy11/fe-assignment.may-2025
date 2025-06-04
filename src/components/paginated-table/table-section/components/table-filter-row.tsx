@@ -15,7 +15,7 @@ export function TableFilterRow<
       {columns.map((col) => (
         <TableCell key={col.key as string}>
           <Input
-            className="h-8"
+            className="h-8 bg-white"
             placeholder={`Filter ${col.label}`}
             value={filters[col.key as string] || ""}
             onChange={(e) =>

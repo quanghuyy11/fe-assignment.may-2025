@@ -1,10 +1,10 @@
 export const cityData: Record<string, string[]> = {
   "Hà Nội": [
-    "Quận Ba Đình",
     "Quận Hoàn Kiếm",
-    "Quận Tây Hồ",
+    "Quận Ba Đình",
     "Quận Long Biên",
     "Quận Cầu Giấy",
+    "Quận Tây Hồ",
     "Quận Đống Đa",
     "Quận Hai Bà Trưng",
     "Quận Hoàng Mai",
@@ -23,8 +23,8 @@ export const cityData: Record<string, string[]> = {
   ],
   "Đà Nẵng": [
     "Quận Hải Châu",
-    "Quận Thanh Khê",
     "Quận Sơn Trà",
+    "Quận Thanh Khê",
     "Quận Ngũ Hành Sơn",
     "Quận Liên Chiểu",
     "Quận Cẩm Lệ",

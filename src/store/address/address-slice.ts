@@ -1,31 +1,30 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-interface Address {
+interface AddressState {
   city: string;
   ward: string;
   street: string;
 }
 
-interface AddressState {
-  address: Address;
-}
-
 const initialState: AddressState = {
-  address: { city: "", ward: "", street: "" },
+  city: '',
+  ward: '',
+  street: '',
 };
 
 export const addressSlice = createSlice({
-  name: "address",
+  name: 'address',
   initialState,
   reducers: {
-    setAddress: (state, action: PayloadAction<Address>) => {
-      state.address = action.payload;
+    setAddressField: (
+      state,
+      action: PayloadAction<{ key: keyof AddressState; value: string }>
+    ) => {
+      state[action.payload.key] = action.payload.value;
     },
-    resetForm: () => initialState,
+    resetAddress: () => initialState,
   },
 });
 
-export const { setAddress, resetForm } = addressSlice.actions;
-export const selectAddress = (state: RootState) => state.address.address;
+export const { setAddressField, resetAddress } = addressSlice.actions;
 export default addressSlice.reducer;

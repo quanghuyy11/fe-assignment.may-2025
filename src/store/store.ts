@@ -2,6 +2,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import addressReducer from "./address/address-slice";
 import tableReducer from "./table/table-slice";
+import schemaReducer from "./schema/schema-slice";
 import {
   persistStore,
   persistReducer,
@@ -17,6 +18,7 @@ import storage from "redux-persist/lib/storage"; // sử dụng localStorage
 const rootReducer = combineReducers({
   address: addressReducer,
   table: tableReducer,
+  schema: schemaReducer,
 });
 
 const persistConfig = {

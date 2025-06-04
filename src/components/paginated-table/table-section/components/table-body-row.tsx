@@ -9,7 +9,13 @@ export function TableBodyRows<
       {data.map((row, rowIdx) => (
         <TableRow key={rowIdx}>
           {columns.map((col) => (
-            <TableCell key={col.key as string}>
+            <TableCell
+              key={col.key as string}
+              style={{
+                minWidth: col.width,
+                maxWidth: col.width,
+              }}
+            >
               {row[col.key] != null ? row[col.key]?.toString() : "N/A"}
             </TableCell>
           ))}

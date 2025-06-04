@@ -4,19 +4,7 @@ import "./assignment3.css";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-
-const customerColumns: { key: keyof Customer; label: string }[] = [
-  { key: "firstName", label: "First Name" },
-  { key: "lastName", label: "Last Name" },
-  { key: "company", label: "Country" },
-  { key: "city", label: "City" },
-  { key: "country", label: "Country" },
-  { key: "phone1", label: "Phone 1" },
-  { key: "phone2", label: "Phone 2" },
-  { key: "email", label: "Email" },
-  { key: "subscriptionDate", label: "Subscription Date" },
-  { key: "website", label: "Website" },
-];
+import { customerColumns } from "./assignment3.model";
 
 const pageSizeOptions: number[] = [5, 10, 20, 50];
 
@@ -41,8 +29,8 @@ export default function Assignment3() {
           />
         </CardContent>
 
-        <CardFooter className="justify-end">
-          <Button className="mt-2" onClick={() => navigate("/")}>
+        <CardFooter className="justify-end mt-2">
+          <Button variant={"sky"} onClick={() => navigate("/")}>
             Go back to menu
           </Button>
         </CardFooter>

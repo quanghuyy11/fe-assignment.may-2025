@@ -69,9 +69,9 @@ export function PaginatedTable<
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-h-[60vh] px-3">
       <div className="w-full text-end">
-        <Button onClick={handleResetFormState}>Reset Form State</Button>
+        <Button variant={"sky"} onClick={handleResetFormState}>Reset Form State</Button>
       </div>
       <TableSection<T> columns={columns} paginatedData={paginatedData} />
       <PaginatedSection
