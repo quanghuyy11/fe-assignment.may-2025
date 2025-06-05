@@ -1,81 +1,70 @@
-import React from 'react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from '@/components/ui/select';
-import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import { cityData } from '@/sample/city';
-import { setAddressField } from '@/store/address/address-slice';
+} from "@/components/ui/select";
+import type { AddressInputProps } from "./address-input.model";
+import { useAddressInputViewModel } from "./address-input.view-model";
 
-interface AddressInputProps {
-  label: string;
-}
-
-export const AddressInput: React.FC<AddressInputProps> = ({ label }) => {
-  const dispatch = useAppDispatch();
-  const address = useAppSelector((state) => state.address);
-  const cityWardMap = cityData;
-
-  const handleCityChange = (val: string) => {
-    dispatch(setAddressField({ key: 'city', value: val }));
-    dispatch(setAddressField({ key: 'ward', value: '' }));
-  };
-
-  const handleWardChange = (val: string) => {
-    dispatch(setAddressField({ key: 'ward', value: val }));
-  };
-
-  const handleStreetChange = (val: string) => {
-    dispatch(setAddressField({ key: 'street', value: val }));
-  };
+export const AddressInput: React.FC<AddressInputProps> = ({
+  label,
+  required,
+  triggerValidation,
+}) => {
+  const {
+    address,
+    errors,
+    cityWardMap,
+    handleCityChange,
+    handleWardChange,
+    handleStreetChange,
+  } = useAddressInputViewModel(required, triggerValidation);
 
   return (
     <div className="space-y-3">
       <Label className="text-sm font-medium text-gray-700">{label}</Label>
 
-      <Select
-        key={address.city}
-        value={address.city}
-        onValueChange={handleCityChange}
-      >
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="City" />
-        </SelectTrigger>
-        <SelectContent>
-          {Object.keys(cityWardMap).map((cityOption) => (
-            <SelectItem key={cityOption} value={cityOption}>
-              {cityOption}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      {address.city && (
-        <Select
-          key={address.ward}
-          value={address.ward}
-          onValueChange={handleWardChange}
-        >
+      <div className="space-y-1">
+        <Select value={address.city} onValueChange={handleCityChange}>
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Ward" />
+            <SelectValue placeholder="City" />
           </SelectTrigger>
           <SelectContent>
-            {(typeof address.city === 'string' && address.city in cityWardMap
-              ? cityWardMap[address.city]
-              : []
-            ).map((wardOption) => (
-              <SelectItem key={wardOption} value={wardOption}>
-                {wardOption}
+            {Object.keys(cityWardMap).map((city) => (
+              <SelectItem key={city} value={city}>
+                {city}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-      )}
+        {errors.city && <p className="text-sm text-red-500">{errors.city}</p>}
+      </div>
+
+      <div className="space-y-1">
+        <Select value={address.ward} onValueChange={handleWardChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Ward" />
+          </SelectTrigger>
+          <SelectContent>
+            {address.city && cityWardMap[address.city]?.length ? (
+              cityWardMap[address.city].map((ward) => (
+                <SelectItem key={ward} value={ward}>
+                  {ward}
+                </SelectItem>
+              ))
+            ) : (
+              <SelectItem disabled value="#">
+                No options available
+              </SelectItem>
+            )}
+          </SelectContent>
+        </Select>
+        {errors.ward && <p className="text-sm text-red-500">{errors.ward}</p>}
+      </div>
 
       {address.ward && (
         <Input

@@ -1,43 +1,18 @@
 import { Textarea } from "@/components/ui/textarea";
 import { guideSchema } from "./json-schema-input.model";
 import { HelperDialog } from "@/components/helper-dialog/helper-dialog";
-import { useState } from "react";
 import { sampleSchemas } from "@/sample/schema";
 import { Button } from "@/components/ui/button";
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { resetFormSchema, setJsonSchema } from "@/store/schema/schema-slice";
-import { resetAddress } from "@/store/address/address-slice";
-import type { RootState } from "@/store/store";
+import { useJsonSchemaInputViewModel } from "./json-schema-input.view-model";
 
 export const JsonSchemaInput = () => {
-  const dispatch = useAppDispatch();
-  const jsonSchema = useAppSelector(
-    (state: RootState) => state.schema.jsonSchema
-  );
-
-  const [schema, setSchema] = useState<string>(jsonSchema);
-  const [renderErrorMsg, setRenderErrorMsg] = useState<string>("");
-
-  const handleRenderForm = () => {
-    try {
-      if (!schema || schema.trim() === "") {
-        setRenderErrorMsg("Input your schema, please!");
-      }
-      JSON.parse(schema);
-      console.log(schema);
-
-      dispatch(setJsonSchema(schema));
-      setRenderErrorMsg("");
-    } catch {
-      setRenderErrorMsg("Something wrong, check format please!");
-    }
-  };
-
-  const handleResetFormSchema = (): void => {
-    dispatch(resetFormSchema());
-    dispatch(resetAddress());
-    setSchema("");
-  };
+  const {
+    schema,
+    setSchema,
+    renderErrorMsg,
+    handleRenderForm,
+    handleResetFormSchema,
+  } = useJsonSchemaInputViewModel();
 
   return (
     <div className="flex flex-col gap-2 my-3">
